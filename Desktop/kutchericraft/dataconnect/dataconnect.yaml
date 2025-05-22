@@ -1,0 +1,12 @@
+specVersion: "v1"
+serviceId: "kutchericraft"
+location: "us-central1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "fdcdb"
+      cloudSql:
+        instanceId: "kutchericraft-fdc"
+      # schemaValidation: "COMPATIBLE"
+connectorDirs: ["./connector"]
