@@ -1,89 +1,186 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carnatic Concert Planner</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>KatcheriCraft</h1>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/11.8.1/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/11.8.1/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/11.8.1/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/11.8.1/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/11.8.1/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/11.8.1/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/11.8.1/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/11.8.1/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/11.8.1/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/11.8.1/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+  <form id="songForm">
+    <input type="text" id="title" placeholder="Title" required />
+    
+    <input type="text" id="raga" placeholder="Raga (e.g., Kalyani)" required />
+    <small style="color: #888;"></small>
+    
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+    <select id="tala">
+      <option value="">Tala</option>
+      <option>Adi (1 kalai)</option>
+      <option>Adi (2 kalai)</option>
+      <option>Rupakam</option>
+      <option>Mishra Chapu</option>
+      <option>Khanda Chapu</option>
+      <option>Ata</option>
+    </select>
+
+    <input type="text" id="composer" placeholder="Composer" />
+    
+    <select id="tempo">
+      <option value="">Tempo</option>
+      <option>Slow</option>
+      <option>Medium-Slow</option>
+      <option>Medium</option>
+      <option>Medium-Fast</option>
+      <option>Fast</option>
+      <option>Very Fast</option>
+    </select>
+
+    <select id="compositionType">
+      <option value="">Composition Type</option>
+      <option>Varnam</option>
+      <option>Krithi</option>
+      <option>Filler</option>
+      <option>Submain</option>
+      <option>Main</option>
+      <option>RTP</option>
+      <option>Padam</option>
+      <option>Javali</option>
+      <option>Thillana</option>
+      <option>Mangalam</option>
+    </select>
+
+    <select id="language">
+        <option value="">Language</option>
+        <option>Sanskrit</option>
+        <option>Telugu</option>
+        <option>Tamil</option>
+        <option>Kannada</option>
+        <option>Malayalam</option>
+        <option>Hindi</option>
+        <option>Marathi</option>
+        <option>Bengali</option>
+      </select>
+
+    <button type="submit">Add Song</button>
+  </form>
+
+  <h2>Setlist</h2>
+  <ul id="setlist"></ul>
+
+  <h2>Feedback</h2>
+  <div id="feedback"></div>
+
+  <h2>Score: <span id="score">100</span></h2>
+  <div class="faq">
+  <h2>Help & FAQ</h2>
+
+  <div class="accordion-item">
+    <button class="accordion">What is KatcheriCraft?</button>
+    <div class="panel">
+      <p>KatcheriCraft is a tool that helps Carnatic musicians build and evaluate concert setlists according to the Ariyakkudi Ramanuja Iyengar format. It checks for structure, variety, and classical formatting, and it will give you feedback and a score.</p>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+  </div>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+  <div class="accordion-item">
+    <button class="accordion">How do I use it?</button>
+    <div class="panel">
+      <p>Use the form above to enter details about each song (title, raga, tala, etc.). Click "Add Song" to include it in the setlist. Feedback and scoring will appear automatically.</p>
+    </div>
+  </div>
 
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
-  </body>
+  <div class="accordion-item">
+    <button class="accordion">What rules does it check for?</button>
+    <div class="panel">
+      <ul>
+        <li>Varnam (if used) must be first</li>
+        <li>Thillana (if used) must be in the last 3 items</li>
+        <li>No raga reuse</li>
+        <li>Warnings for excessive use of the same tala, tempo, or composer</li>
+        <li>Feedback-based score out of 100</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion">What's coming next?</button>
+    <div class="panel">
+      <p>Future features may include raga similarity checks, save/load functionality, theme filters, and export options.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .faq {
+    max-width: 720px;
+    margin: 2rem auto;
+  }
+  .accordion {
+    background-color: #fdfdfd;
+    color: #333;
+    cursor: pointer;
+    padding: 1rem;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border-left: 4px solid #4f46e5;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.3s ease;
+  }
+  .accordion:hover {
+    background-color: #f3f3f3;
+  }
+  .panel {
+    padding: 0 1rem 1rem;
+    background-color: #fefefe;
+    display: none;
+    overflow: hidden;
+    border-left: 4px solid #4f46e5;
+    border-radius: 0 0 8px 8px;
+    margin-bottom: 1rem;
+  }
+</style>
+
+<script>
+  document.querySelectorAll(".accordion").forEach(btn => {
+    btn.addEventListener("click", function () {
+      const panel = this.nextElementSibling;
+      const expanded = panel.style.display === "block";
+      document.querySelectorAll(".panel").forEach(p => p.style.display = "none");
+      panel.style.display = expanded ? "none" : "block";
+    });
+  });
+</script>
+
+  <script src="script.js"></script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyCkeCznQ2E0SdJXnY9Y4dpxijYAptdtwUs",
+      authDomain: "kutchericraft.firebaseapp.com",
+      projectId: "kutchericraft",
+      storageBucket: "kutchericraft.firebasestorage.app",
+      messagingSenderId: "277415625936",
+      appId: "1:277415625936:web:cb43b8f8738973c80b0ad5",
+      measurementId: "G-9Y17P24K5D"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+</body>
 </html>

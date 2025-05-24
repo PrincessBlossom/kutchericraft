@@ -9,7 +9,9 @@ document.getElementById("songForm").addEventListener("submit", function (e) {
     tala: document.getElementById("tala").value.trim(),
     composer: document.getElementById("composer").value.trim().toLowerCase(),
     tempo: document.getElementById("tempo").value.trim(),
-    type: document.getElementById("type").value.trim(),
+    type: document.getElementById("compositionType").value.trim(),
+    language: document.getElementById("language").value.trim(),
+
   };
 
   setlist.push(song);
@@ -22,12 +24,26 @@ document.getElementById("songForm").addEventListener("submit", function (e) {
 function renderSetlist() {
   const list = document.getElementById("setlist");
   list.innerHTML = "";
+
   setlist.forEach((song, index) => {
     const item = document.createElement("li");
-    item.textContent = `${index + 1}. ${song.title} – ${song.raga} – ${song.type}`;
+
+    item.innerHTML = `
+      <div><strong>${index + 1}. ${song.title}</strong></div>
+      <div>
+        <span><span class="label">Raga:</span> ${song.raga}</span>
+        <span><span class="label">Tala:</span> ${song.tala}</span>
+        <span><span class="label">Composer:</span> ${song.composer}</span>
+        <span><span class="label">Tempo:</span> ${song.tempo}</span>
+        <span><span class="label">Type:</span> ${song.type}</span>
+        <span><span class="label">Language:</span> ${song.language}</span>
+      </div>
+    `;
+
     list.appendChild(item);
   });
 }
+
 
 function renderFeedback(feedback, score, fatal) {
   document.getElementById("feedback").innerHTML = feedback
